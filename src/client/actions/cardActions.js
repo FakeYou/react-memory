@@ -29,10 +29,12 @@ class CardActions {
 		this.generateActions(
 			'shuffleCards',
 			'sortCards',
-			'startGame',
 			'updateCards',
-			'updateCard'
+			'updateCard',
+			'updateTimer'
 		);
+
+		this.timer = null;
 	}
 
 	getCards(amount) {
@@ -78,10 +80,12 @@ class CardActions {
 
 		if(openCards.length === 2) {
 			if(openCards[0].name === openCards[1].name) {
-				openCards[0].isMatched = true;
-				openCards[1].isMatched = true;
-				this.actions.updateCard(openCards[0]);
-				this.actions.updateCard(openCards[1]);
+				setTimeout(() => {
+					openCards[0].isMatched = true;
+					openCards[1].isMatched = true;
+					this.actions.updateCard(openCards[0]);
+					this.actions.updateCard(openCards[1]);
+				}, 500);
 			}
 			else {
 				setTimeout(() => {
@@ -89,8 +93,43 @@ class CardActions {
 					openCards[1].isOpen = false;
 					this.actions.updateCard(openCards[0]);
 					this.actions.updateCard(openCards[1]);
-				}, 500);
+				}, 1000);
 			}
+		}
+	}
+
+	startGame() {
+		this.dispatch();
+
+		if(this.timer) {
+			clearTimeout(this.timer);
+			this.timer = null;
+		}
+		
+		var timer = () => {
+			var time = this.alt.stores.CardStore.getState().timer;
+			var started = this.alt.stores.CardStore.getState().started;
+			var start = Date.now();
+
+			this.timer = setTimeout(() => {
+				let delta = Date.now() - start;
+				this.actions.updateTimer(time + delta);
+
+				if(started) {
+					timer();
+				}
+			}, 10);
+		};
+
+		timer();
+	}
+
+	stopGame() {
+		this.dispatch();
+
+		if(this.timer) {
+			clearTimeout(this.timer);
+			this.timer = null;
 		}
 	}
 }

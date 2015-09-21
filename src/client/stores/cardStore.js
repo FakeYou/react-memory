@@ -7,6 +7,8 @@ import CardActions from 'actions/cardActions';
 @createStore(flux)
 class CardStore {
 	constructor() {
+		this.timer = 0;
+		this.started = false;
 		this.cards = [];
 	}
 
@@ -21,8 +23,9 @@ class CardStore {
 		this.cards[card.id] = card;
 	}
 
-	@bind(CardActions.openCard);
-	openCard(card) {
+	@bind(CardActions.updateTimer);
+	updateTimer(timer) {
+		this.timer = timer;
 	}
 
 	@bind(CardActions.shuffleCards);
@@ -40,6 +43,13 @@ class CardStore {
 		});
 
 		this.updateCards(cards);
+		this.started = true;
+		this.timer = 0;
+	}
+
+	@bind(CardActions.stopGame);
+	stopGame() {
+		this.started = false;
 	}
 
 	@bind(CardActions.sortCards);

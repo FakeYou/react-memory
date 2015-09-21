@@ -1,9 +1,9 @@
 import React from 'react';
+import {TransitionSpring} from 'react-motion';
 import FontAwesome from 'react-fontawesome';
 import classNames from 'classNames';
 import CardActions from 'actions/cardActions';
 import 'style/card';
-
 
 class Card extends React.Component {
 	constructor(props) {
@@ -20,6 +20,17 @@ class Card extends React.Component {
 			{ 'open': this.props.isOpen || this.props.isMatched }
 		);
 
+		return (
+					<div className={classes} onClick={this.handleClick}>
+						{this.renderCard()}
+					</div>	
+		);
+	}
+
+	renderCard() {
+		let front;
+		let back = (<div className="back"></div>);
+
 		if(this.props.isOpen) {
 			front = (
 				<div className="front">
@@ -32,12 +43,7 @@ class Card extends React.Component {
 			front = (<div className="front"></div>);
 		}
 
-		return (
-			<div className={classes} onClick={this.handleClick}>
-				{front}
-				<div className="back"></div>
-			</div>
-		);
+		return [front, back];
 	}
 
 	handleClick = (e) => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {values} from 'lodash';
 import connectToStores from 'alt/utils/connectToStores';
 import Card from 'components/card';
@@ -12,6 +13,8 @@ class Deck extends React.Component {
 		super(props);
 
 		this.state = {
+			timer: props.timer,
+			started: props.started,
 			cards: props.cards
 		};
 	}
@@ -24,6 +27,12 @@ class Deck extends React.Component {
 		return CardStore.getState();
 	}
 
+	get timer() {
+		return moment(0)
+			.milliseconds(this.props.timer)
+			.format('mm:ss.SSS');
+	}
+
 	render() {
 		let cards = values(this.props.cards).map((card) => {
 			return (
@@ -31,11 +40,24 @@ class Deck extends React.Component {
 			);
 		});
 
+		let buttons;
+
+		if(this.props.started) {
+			buttons = (
+				<button onClick={this.stopGame}>stop</button>
+			);
+		}
+		else {
+			buttons = ([
+				<button onClick={this.dealCards}>deal</button>,
+				<button onClick={this.startGame}>start</button>
+			]);
+		}
+
 		return (
 			<div className="deck medium">
-				<h1>Deck</h1>
-				<button onClick={this.dealCards}>deal</button>
-				<button onClick={this.startGame}>start</button>
+				<h1>{this.timer}</h1>
+				{buttons}
 				<div>
 					{cards}
 				</div>
@@ -51,6 +73,10 @@ class Deck extends React.Component {
 	startGame = (e) => {
 		CardActions.shuffleCards();
 		CardActions.startGame();
+	}
+
+	stopGame = (e) => {
+		CardActions.stopGame();
 	}
 }
 

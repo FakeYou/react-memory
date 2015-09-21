@@ -4,7 +4,7 @@ var webpack           = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path              = require('path');
 
-var srcPath    = path.join(__dirname, 'src');
+var srcPath    = path.join(__dirname, 'src/client');
 var buildPath  = path.join(__dirname, 'build');
 var modulePath = path.join(srcPath, 'module.js');
 var indexPath  = path.join(srcPath, 'index.html');
