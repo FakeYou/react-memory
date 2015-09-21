@@ -1,6 +1,13 @@
 @import "_variables";
 @import "_mixins.scss";
 
+$cardColors: (
+  (red, $red),
+  (blue, $blue),
+  (green, $green),
+  (yellow, $yellow)
+);
+
 .card {
   position: relative;
   display: inline-block;
@@ -10,68 +17,44 @@
   margin: 5px;
   text-align: center;
   cursor: pointer;
+  user-select: none;
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
-  user-select: none;
   transform: rotateX(180deg);
+  // animation: hide 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s;  
+  // animation-fill-mode: forwards;
   -webkit-user-select: none;
-  
   box-shadow: 
     0 0 50px 0 rgba(0, 0, 0, 0.2), 
     -2px 2px 10px 0 rgba(0, 0, 0, 0.2);
   
-  &.matched {
-    animation: none;
-    box-shadow: none;
-  }
-  
-  &.flipped {
-    animation: none;
-  }
-  
-  
-  &:hover {
-    animation-play-state: running;
-  }
-  
-  &.red .front, &.red .front * {
-    border-color: $red;
-    color: $red;
-  }
-  
-  &.blue .front, &.blue .front * {
-    border-color: $blue;
-    color: $blue;
-  }
-  
-  &.green .front, &.green .front * {
-    border-color: $green;
-    color: $green;
-  }
-  
-  &.yellow .front, &.yellow .front * {
-    border-color: $yellow;
-    color: $yellow;
+
+  @each $class, $color in $cardColors {
+    &.#{$class} .front {
+      border-color: $color;
+    }
+    
+    &.#{$class} .front span, 
+    &.#{$class} .front h2 {
+      color: $color;
+    }
   }
   
   &.matched .front {
-    transition-delay: 0.9s;
-    transition-duration: 0.5s;
+    // transition-delay: 0.9s;
+    // transition-duration: 0.5s;
     background-color: rgba(0, 0, 0, 0.1);
     border-color: transparent;
     cursor: default;
     span, h2 {
-      transition-delay: 0.9s;
-      transition-duration: 0.5s;
+      // transition-delay: 0.9s;
+      // transition-duration: 0.5s;
       color: rgba(255, 255, 255, 0.8);
     }
     h2 {
       color: transparent;
     }
   }
-
-  // animation: hide 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s;  
-  // animation-fill-mode: forwards;
 
   &.open {
     transform: rotateY(0deg);
@@ -80,12 +63,17 @@
     // animation-fill-mode: forwards;
   }
 
-  // &:not(.open) {
-  //   animation: flip 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s;  
-  //   animation-iteration-count: 1;
-  //   animation-fill-mode: forwards;
-  // }
+  &.matched {
+    animation: none;
+    box-shadow: none;
+    transform: rotateY(0deg);
+  }
   
+  &.flipped, &.static {
+    animation: none;
+    transform: rotateY(0deg);
+  }
+
   .front {
     @include flex();
     position: absolute;

@@ -1,6 +1,6 @@
 import flux from 'control';
 import {createActions} from 'alt/utils/decorators';
-import {indexBy} from 'lodash';
+import {indexBy, where} from 'lodash';
 
 const cardDefinitions = [
 	{ name: 'lock',    icon: 'unlock-alt',     color: 'green'},
@@ -27,7 +27,6 @@ const cardDefinitions = [
 class CardActions {
 	constructor() {
 		this.generateActions(
-			'openCard',
 			'shuffleCards',
 			'sortCards',
 			'startGame',
@@ -42,6 +41,7 @@ class CardActions {
 		let cardPairs1 = definitions.map((card) => {
 			card = Object.assign({}, card);
 			card.pair = 1;
+			card.isStarted = false;
 			card.isOpen = true;
 			card.isMatched = false;
 			card.id = card.name + card.pair;
@@ -51,6 +51,7 @@ class CardActions {
 		let cardPairs2 = definitions.map((card) => {
 			card = Object.assign({}, card);
 			card.pair = 2;
+			card.isStarted = false;
 			card.isOpen = true;
 			card.isMatched = false;
 			card.id = card.name + card.pair;
@@ -62,6 +63,35 @@ class CardActions {
 		cards = indexBy(cards, 'id');
 
 		this.actions.updateCards(cards);
+	}
+
+	openCard(card) {
+		let cards = this.alt.stores.CardStore.getState().cards;
+		var openCards = where(cards, { isOpen: true, isMatched: false });
+
+		if(openCards.length < 2) {
+			card.isOpen = true;
+			this.actions.updateCard(card);
+		}
+
+		openCards = where(cards, { isOpen: true, isMatched: false });
+
+		if(openCards.length === 2) {
+			if(openCards[0].name === openCards[1].name) {
+				openCards[0].isMatched = true;
+				openCards[1].isMatched = true;
+				this.actions.updateCard(openCards[0]);
+				this.actions.updateCard(openCards[1]);
+			}
+			else {
+				setTimeout(() => {
+					openCards[0].isOpen = false;
+					openCards[1].isOpen = false;
+					this.actions.updateCard(openCards[0]);
+					this.actions.updateCard(openCards[1]);
+				}, 500);
+			}
+		}
 	}
 }
 

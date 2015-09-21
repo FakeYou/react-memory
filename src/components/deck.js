@@ -35,7 +35,6 @@ class Deck extends React.Component {
 			<div className="deck medium">
 				<h1>Deck</h1>
 				<button onClick={this.dealCards}>deal</button>
-				<button onClick={this.shuffleCards}>shuffle</button>
 				<button onClick={this.startGame}>start</button>
 				<div>
 					{cards}
@@ -47,10 +46,6 @@ class Deck extends React.Component {
 	dealCards = (e) => {
 		CardActions.getCards(16);
 		CardActions.sortCards();
-	}
-
-	shuffleCards = (e) => {
-		CardActions.shuffleCards();
 	}
 
 	startGame = (e) => {

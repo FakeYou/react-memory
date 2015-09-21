@@ -1,7 +1,7 @@
 import flux from 'control';
 import {createStore, bind} from 'alt/utils/decorators';
 import {knuthShuffle} from 'knuth-shuffle';
-import {sortByAll, find, where, indexBy, values} from 'lodash';
+import {sortByAll, find, indexBy, values} from 'lodash';
 import CardActions from 'actions/cardActions';
 
 @createStore(flux)
@@ -23,31 +23,6 @@ class CardStore {
 
 	@bind(CardActions.openCard);
 	openCard(card) {
-		var openCards = where(this.cards, { isOpen: true, isMatched: false });
-
-		if(openCards.length < 2) {
-			card.isOpen = true;
-			this.updateCard(card);
-		}
-
-		openCards = where(this.cards, { isOpen: true, isMatched: false });
-
-		if(openCards.length === 2) {
-			if(openCards[0].name === openCards[1].name) {
-				openCards[0].isMatched = true;
-				openCards[1].isMatched = true;
-				this.updateCard(openCards[0]);
-				this.updateCard(openCards[1]);
-			}
-			else {
-				setTimeout(() => {
-					openCards[0].isOpen = false;
-					openCards[1].isOpen = false;
-					this.updateCard(openCards[0]);
-					this.updateCard(openCards[1]);
-				}, 1000);
-			}
-		}
 	}
 
 	@bind(CardActions.shuffleCards);
@@ -59,6 +34,7 @@ class CardStore {
 	startGame() {
 		let cards = values(this.cards);
 		cards.forEach((card) => {
+			card.isStarted = true;
 			card.isOpen = false;
 			card.isMatched = false;
 		});
