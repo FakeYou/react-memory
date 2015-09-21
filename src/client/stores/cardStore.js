@@ -1,4 +1,4 @@
-import flux from 'control';
+import flux from 'connect';
 import {createStore, bind} from 'alt/utils/decorators';
 import {knuthShuffle} from 'knuth-shuffle';
 import {sortByAll, find, indexBy, values} from 'lodash';

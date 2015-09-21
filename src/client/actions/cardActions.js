@@ -1,4 +1,4 @@
-import flux from 'control';
+import flux from 'connect';
 import {createActions} from 'alt/utils/decorators';
 import {indexBy, where} from 'lodash';
 
