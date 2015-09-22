@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import {values} from 'lodash';
+import classNames from 'classNames';
 import connectToStores from 'alt/utils/connectToStores';
 import Card from 'components/card';
 import CardStore from 'stores/cardStore';
@@ -11,7 +12,6 @@ import 'style/deck';
 class Deck extends React.Component {
 	constructor(props) {
 		super(props);
-
 
 		this.state = {
 			timer: props.timer,
@@ -36,46 +36,61 @@ class Deck extends React.Component {
 
 	componentDidMount() {
 		setTimeout(() => {
-			CardActions.getCards(16);
+			let amount;
+
+			switch(this.props.size) {
+				case 'small':
+					amount = 4;
+					break;
+				default:
+				case 'medium':
+					amount = 16;
+					break;
+				case 'large':
+					amount = 36;
+			};
+
+			CardActions.getCards(amount);
 			CardActions.sortCards();
 		}, 0);
 	}
 
 	render() {
-		let cards = values(this.props.cards).map((card) => {
-			return (
-				<Card key={card.id} {...card} />
-			);
-		});
-
-		let buttons;
-
-		if(this.props.started) {
-			buttons = (
-				<button onClick={this.stopGame}>stop</button>
-			);
-		}
-		else {
-			buttons = ([
-				<button onClick={this.dealCards}>deal</button>,
-				<button onClick={this.startGame}>start</button>
-			]);
-		}
+		let classes = classNames([
+			'deck',
+			this.props.size || 'medium'
+		]);
 
 		return (
-			<div className="deck medium">
+			<div className={classes}>
 				<div className="cards">
-					{cards}
+					{this.cards()}
 				</div>
 				<h1>{this.timer}</h1>
-				{buttons}
+				{this.buttons()}
 			</div>
 		);
 	}
 
-	dealCards = (e) => {
-		CardActions.getCards(16);
-		CardActions.sortCards();
+	cards = () => {
+		return values(this.props.cards).map((card) => {
+			return (
+				<Card key={card.id} {...card} />
+			);
+		});
+	}
+
+	buttons = () => {
+		if(this.props.started) {
+			return (
+				<button onClick={this.stopGame}>stop</button>
+			);
+		}
+		else {
+			return ([
+				<button onClick={this.startGame}>start</button>
+			]);
+		}
 	}
 
 	startGame = (e) => {

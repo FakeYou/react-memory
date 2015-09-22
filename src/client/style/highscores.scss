@@ -1,3 +1,9 @@
+$medals: (
+	(1, #DCAA38), // gold
+	(2, #C8C1BD), // silver
+	(3, #BC6B4C), // bronze
+);
+
 .highscores {
 
 	table {
@@ -15,10 +21,34 @@
 		tbody {
 			td {
 				padding: 4px 10px;
+				position: relative;
+
+				&.message {
+					color: darken(#fff, 30);
+					text-align: center;
+					font-style: italic;
+				}
 			}
 
 			tr:nth-child(even) td {
 				background-color: rgba(0, 0, 0, 0.1);
+			}
+
+			@each $i, $medal in $medals {
+				$size: (18px - $i*2);
+
+				tr:nth-child(#{$i}) td:first-child::after {
+					content: '';
+					background-color: $medal;
+					border: 2px solid darken($medal, 20);
+					box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+					width: $size;
+					height: $size;
+					border-radius: 4px 4px 8px 8px;
+					position: absolute;
+					top: calc(50% - #{$size}/2);
+					left: calc(50% - #{$size}/2);
+				}
 			}
 		}
 	}

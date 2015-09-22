@@ -38,17 +38,24 @@ class Highscores extends React.Component {
 		let entries = values(this.props.highscores).map((highscore) => {
 			return (
 				<tr>
+					<td></td>
 					<td>{highscore.username}</td>
 					<td>{this.formatScore(highscore.score)}</td>
 				</tr>
 			);
 		});
 
+		if(entries.length === 0) {
+			entries = (
+				<tr><td colSpan="3" className="message">No highscores yet...</td></tr>
+			);
+		}
+
 		return (
 			<div className="highscores">
 				<table>
 					<thead>
-						<tr><th>Username</th><th>Score</th></tr>
+						<tr><th></th><th>Username</th><th>Score</th></tr>
 					</thead>
 					<tbody>
 						{entries}
