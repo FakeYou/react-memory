@@ -69,6 +69,10 @@ class CardActions {
 	}
 
 	openCard(card) {
+		if(card.isOpen) {
+			return;
+		}
+
 		let cards = this.alt.stores.CardStore.getState().cards;
 		var openCards = where(cards, { isOpen: true, isMatched: false });
 
@@ -107,9 +111,11 @@ class CardActions {
 		if(cards.length === matchedCards.length) {
 			this.actions.stopGame();
 			
-			let username = (0|Math.random()*9e6).toString(36);
-			let score = this.alt.stores.CardStore.getState().timer;
-			HighscoreActions.setHighscore({ username: username, score: score });
+			setTimeout(() => {
+				let username = (0|Math.random()*9e6).toString(36);
+				let score = this.alt.stores.CardStore.getState().timer;
+				HighscoreActions.setHighscore({ username: username, score: score });
+			}, 0);
 		}
 	}
 
@@ -127,10 +133,10 @@ class CardActions {
 			var start = Date.now();
 
 			this.timer = setTimeout(() => {
-				let delta = Date.now() - start;
-				this.actions.updateTimer(time + delta);
-
 				if(started) {
+					let delta = Date.now() - start;
+					this.actions.updateTimer(time + delta);
+
 					timer();
 				}
 			}, 10);

@@ -28,20 +28,13 @@ class Card extends React.Component {
 	}
 
 	renderCard() {
-		let front;
 		let back = (<div className="back"></div>);
-
-		if(this.props.isOpen) {
-			front = (
-				<div className="front">
-					<FontAwesome name={this.props.icon} />
-					<h2>{this.props.name}</h2>
-				</div>
-			);
-		}
-		else {
-			front = (<div className="front"></div>);
-		}
+		let	front = (
+			<div className="front">
+				<FontAwesome name={this.props.icon} />
+				<h2>{this.props.name}</h2>
+			</div>
+		);
 
 		return [front, back];
 	}

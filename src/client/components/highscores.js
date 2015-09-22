@@ -1,10 +1,13 @@
 import React from 'react';
+import addons from 'react/addons';
 import moment from 'moment';
 import {values} from 'lodash';
 import connectToStores from 'alt/utils/connectToStores';
 import HighscoreStore from 'stores/highscoreStore';
 import HighscoreActions from 'actions/highscoreActions';
 import 'style/highscores';
+
+let ReactCSSTransitionGroup = addons.addons.CSSTransitionGroup;
 
 @connectToStores
 class Highscores extends React.Component {
@@ -37,7 +40,7 @@ class Highscores extends React.Component {
 	render() {
 		let entries = values(this.props.highscores).map((highscore) => {
 			return (
-				<tr>
+				<tr key={highscore._id}>
 					<td></td>
 					<td>{highscore.username}</td>
 					<td>{this.formatScore(highscore.score)}</td>
@@ -47,7 +50,7 @@ class Highscores extends React.Component {
 
 		if(entries.length === 0) {
 			entries = (
-				<tr><td colSpan="3" className="message">No highscores yet...</td></tr>
+				<tr key="message"><td colSpan="3" className="message">No highscores yet...</td></tr>
 			);
 		}
 
@@ -55,11 +58,15 @@ class Highscores extends React.Component {
 			<div className="highscores">
 				<table>
 					<thead>
-						<tr><th></th><th>Username</th><th>Score</th></tr>
+						<tr>
+							<th width="5%"></th>
+							<th>Username</th>
+							<th width="40%">Score</th>
+						</tr>
 					</thead>
-					<tbody>
+					<ReactCSSTransitionGroup transitionName="entry" component="tbody">
 						{entries}
-					</tbody>
+					</ReactCSSTransitionGroup>
 				</table>
 			</div>
 		);

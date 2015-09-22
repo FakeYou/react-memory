@@ -18,6 +18,26 @@ $medals: (
 			}
 		}
 
+		.entry-enter {
+			opacity: 0;
+			transform: scaleY(0);
+		}
+
+		.entry-enter.entry-enter-active {
+			opacity: 1;
+			transform: scaleY(1);
+			transition: all .4s ease-in;
+		}
+
+		.entry-leave {
+			opacity: 1;
+		}
+
+		.entry-leave.entry-leave-active {
+			opacity: 0;
+			transition: all .5s ease-out;
+		}
+
 		tbody {
 			td {
 				padding: 4px 10px;
