@@ -48,11 +48,11 @@ class Highscores extends React.Component {
 			);
 		});
 
-		if(entries.length === 0) {
-			entries = (
-				<tr key="message"><td colSpan="3" className="message">No highscores yet...</td></tr>
-			);
-		}
+		// if(entries.length === 0) {
+		// 	entries = (
+		// 		// <tr key="message"><td colSpan="3" className="message">No highscores yet...</td></tr>
+		// 	);
+		// }
 
 		return (
 			<div className="highscores">

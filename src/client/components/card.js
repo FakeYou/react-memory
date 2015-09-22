@@ -1,9 +1,11 @@
 import React from 'react';
-import {TransitionSpring} from 'react-motion';
+import addons from 'react/addons';
 import FontAwesome from 'react-fontawesome';
 import classNames from 'classNames';
 import CardActions from 'actions/cardActions';
 import 'style/card';
+
+let ReactCSSTransitionGroup = addons.addons.CSSTransitionGroup;
 
 class Card extends React.Component {
 	constructor(props) {
@@ -15,9 +17,7 @@ class Card extends React.Component {
 		let classes = classNames(
 			'card', 
 			this.props.color,
-			{ 'static': !this.props.isStarted },
 			{ 'matched': this.props.isMatched },
-			{ 'open': this.props.isOpen || this.props.isMatched }
 		);
 
 		return (
@@ -28,15 +28,32 @@ class Card extends React.Component {
 	}
 
 	renderCard() {
-		let back = (<div className="back"></div>);
+		let back = (
+			<div key={this.props.id+'back'} className="back"></div>
+		);
+
 		let	front = (
-			<div className="front">
+			<div key={this.props.id+'front'} className="front">
 				<FontAwesome name={this.props.icon} />
 				<h2>{this.props.name}</h2>
 			</div>
 		);
 
-		return [front, back];
+		if(this.props.isOpen || this.props.isMatched) {
+			back = null;
+		}
+		else {
+			front = null;
+		}
+
+		let card = (
+			<ReactCSSTransitionGroup transitionName="flip" transitionAppear={true}>
+				{front}
+				{back}
+			</ReactCSSTransitionGroup>
+		);
+
+		return card;
 	}
 
 	handleClick = (e) => {

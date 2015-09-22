@@ -91,7 +91,7 @@ class CardActions {
 					this.actions.updateCard(openCards[0]);
 					this.actions.updateCard(openCards[1]);
 					this.actions.checkComplete();
-				}, 500);
+				}, 1000);
 			}
 			else {
 				setTimeout(() => {
