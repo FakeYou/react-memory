@@ -6,9 +6,13 @@ import 'style/app';
 class Main extends React.Component {
 	render() {
 		return (
-			<div>
-				<Highscores />
-				<Deck />
+			<div className="row">
+				<div className="col-md-8">
+					<Deck />
+				</div>
+				<div className="col-md-4">
+					<Highscores />
+				</div>
 			</div>
 		);
 	}

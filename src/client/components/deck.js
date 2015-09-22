@@ -12,6 +12,7 @@ class Deck extends React.Component {
 	constructor(props) {
 		super(props);
 
+
 		this.state = {
 			timer: props.timer,
 			started: props.started,
@@ -31,6 +32,13 @@ class Deck extends React.Component {
 		return moment(0)
 			.milliseconds(this.props.timer)
 			.format('mm:ss.SSS');
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			CardActions.getCards(16);
+			CardActions.sortCards();
+		}, 0);
 	}
 
 	render() {
@@ -56,11 +64,11 @@ class Deck extends React.Component {
 
 		return (
 			<div className="deck medium">
-				<h1>{this.timer}</h1>
-				{buttons}
-				<div>
+				<div className="cards">
 					{cards}
 				</div>
+				<h1>{this.timer}</h1>
+				{buttons}
 			</div>
 		);
 	}

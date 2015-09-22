@@ -9,7 +9,7 @@ let database = new nedb({
 });
 
 let getHighscores = (cb) => {
-	database.find({}).sort({ score: -1 }).limit(10).exec(cb);
+	database.find({}).sort({ score: 1 }).limit(10).exec(cb);
 };
 
 server.on('connection', (socket) => {

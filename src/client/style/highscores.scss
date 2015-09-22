@@ -1,0 +1,25 @@
+.highscores {
+
+	table {
+		width: 100%;
+
+		thead {
+			th {
+				font-weight: normal;
+				font-size: 1.2em;
+				padding: 4px 10px;
+				border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+			}
+		}
+
+		tbody {
+			td {
+				padding: 4px 10px;
+			}
+
+			tr:nth-child(even) td {
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+		}
+	}
+}

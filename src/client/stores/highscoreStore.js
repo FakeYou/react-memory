@@ -12,7 +12,6 @@ class HighscoreStore {
 	@bind(HighscoreActions.updateHighscores);
 	updateHighscores(highscores) {
 		highscores = indexBy(highscores, '_id');
-		console.log(highscores);
 		this.highscores = highscores;
 	}
 

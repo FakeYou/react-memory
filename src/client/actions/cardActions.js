@@ -1,6 +1,7 @@
 import flux from 'connect';
 import {createActions} from 'alt/utils/decorators';
-import {indexBy, where} from 'lodash';
+import {indexBy, where, values} from 'lodash';
+import HighscoreActions from 'actions/highscoreActions';
 
 const cardDefinitions = [
 	{ name: 'lock',    icon: 'unlock-alt',     color: 'green'},
@@ -85,6 +86,7 @@ class CardActions {
 					openCards[1].isMatched = true;
 					this.actions.updateCard(openCards[0]);
 					this.actions.updateCard(openCards[1]);
+					this.actions.checkComplete();
 				}, 500);
 			}
 			else {
@@ -95,6 +97,19 @@ class CardActions {
 					this.actions.updateCard(openCards[1]);
 				}, 1000);
 			}
+		}
+	}
+
+	checkComplete() {
+		let cards = values(this.alt.stores.CardStore.getState().cards);
+		let matchedCards = where(cards, { isMatched: true });
+
+		if(cards.length === matchedCards.length) {
+			this.actions.stopGame();
+			
+			let username = (0|Math.random()*9e6).toString(36);
+			let score = this.alt.stores.CardStore.getState().timer;
+			HighscoreActions.setHighscore({ username: username, score: score });
 		}
 	}
 

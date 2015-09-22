@@ -21,9 +21,9 @@ class Card extends React.Component {
 		);
 
 		return (
-					<div className={classes} onClick={this.handleClick}>
-						{this.renderCard()}
-					</div>	
+			<div className={classes} onClick={this.handleClick}>
+				{this.renderCard()}
+			</div>	
 		);
 	}
 

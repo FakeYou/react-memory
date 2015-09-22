@@ -13,7 +13,6 @@ class HighscoreActions {
 
 	fetchHighscores() {
 		socket.on('highscores', (data) => {
-			console.log(data);
 			this.actions.updateHighscores(data);
 		});
 

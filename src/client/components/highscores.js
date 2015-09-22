@@ -1,8 +1,10 @@
 import React from 'react';
+import moment from 'moment';
 import {values} from 'lodash';
 import connectToStores from 'alt/utils/connectToStores';
 import HighscoreStore from 'stores/highscoreStore';
 import HighscoreActions from 'actions/highscoreActions';
+import 'style/highscores';
 
 @connectToStores
 class Highscores extends React.Component {
@@ -26,22 +28,27 @@ class Highscores extends React.Component {
 		HighscoreActions.fetchHighscores();
 	}
 
+	formatScore(score) {
+		return moment(0)
+			.milliseconds(score)
+			.format('mm:ss.SSS');
+	}
+
 	render() {
 		let entries = values(this.props.highscores).map((highscore) => {
 			return (
 				<tr>
 					<td>{highscore.username}</td>
-					<td>{highscore.score}</td>
+					<td>{this.formatScore(highscore.score)}</td>
 				</tr>
 			);
 		});
 
 		return (
-			<div>
-				<button onClick={this.handleClick}>Boom!</button>
+			<div className="highscores">
 				<table>
 					<thead>
-						<tr><td>Username</td><td>Score</td></tr>
+						<tr><th>Username</th><th>Score</th></tr>
 					</thead>
 					<tbody>
 						{entries}

@@ -1,17 +1,6 @@
 @import "_variables.scss";
 
 .deck {
-	position: relative;
-
-	&.small {
-		width: calc(90px * 2);
-	}
-	&.medium {
-		width: calc(90px * 4);
-	}
-	&.large {
-		width: calc(90px * 6);
-	}
 
 	> h1 {
 		font-family: 'Montserrat', sans-serif;
@@ -25,7 +14,6 @@
 	}
 
 	> span {
-		position: absolute;
 		right: 0;
 		top: 0;
 		margin: calc(1em - 8px) 4px;
@@ -41,5 +29,15 @@
 		perspective: 2200px;
 		transform-origin: 50% 50%;
 		transform-style: preserve-3d;
+		margin: 0 auto;
+	}
+	&.small .cards {
+		width: calc(90px * 2);
+	}
+	&.medium .cards {
+		width: calc(90px * 4);
+	}
+	&.large .cards {
+		width: calc(90px * 6);
 	}
 }
