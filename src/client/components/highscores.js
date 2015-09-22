@@ -48,12 +48,6 @@ class Highscores extends React.Component {
 			);
 		});
 
-		// if(entries.length === 0) {
-		// 	entries = (
-		// 		// <tr key="message"><td colSpan="3" className="message">No highscores yet...</td></tr>
-		// 	);
-		// }
-
 		return (
 			<div className="highscores">
 				<table>
@@ -70,13 +64,6 @@ class Highscores extends React.Component {
 				</table>
 			</div>
 		);
-	}
-
-	handleClick = (e) => {
-		let username = (0|Math.random()*9e6).toString(36);
-		let score = Math.round(Math.random() * 400)
-
-		HighscoreActions.setHighscore({ username: username, score: score });
 	}
 }
 

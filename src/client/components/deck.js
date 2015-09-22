@@ -4,6 +4,7 @@ import {values} from 'lodash';
 import classNames from 'classNames';
 import connectToStores from 'alt/utils/connectToStores';
 import Card from 'components/card';
+import Menu from 'components/menu';
 import CardStore from 'stores/cardStore';
 import CardActions from 'actions/cardActions';
 import 'style/deck';
@@ -12,12 +13,6 @@ import 'style/deck';
 class Deck extends React.Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			timer: props.timer,
-			started: props.started,
-			cards: props.cards
-		};
 	}
 
 	static getStores(props) {
@@ -35,6 +30,8 @@ class Deck extends React.Component {
 	}
 
 	componentDidMount() {
+    // this.ticker = setInterval(this.tick.bind(this), 150);
+
 		setTimeout(() => {
 			let amount;
 
@@ -51,8 +48,7 @@ class Deck extends React.Component {
 			};
 
 			CardActions.getCards(amount);
-			CardActions.sortCards();
-		}, 0);
+		}, 1000);
 	}
 
 	render() {
@@ -67,7 +63,7 @@ class Deck extends React.Component {
 					{this.cards()}
 				</div>
 				<h1>{this.timer}</h1>
-				{this.buttons()}
+				<Menu {...this.props} />
 			</div>
 		);
 	}
@@ -78,28 +74,6 @@ class Deck extends React.Component {
 				<Card key={card.id} {...card} />
 			);
 		});
-	}
-
-	buttons = () => {
-		if(this.props.started) {
-			return (
-				<button onClick={this.stopGame}>stop</button>
-			);
-		}
-		else {
-			return ([
-				<button onClick={this.startGame}>start</button>
-			]);
-		}
-	}
-
-	startGame = (e) => {
-		CardActions.shuffleCards();
-		CardActions.startGame();
-	}
-
-	stopGame = (e) => {
-		CardActions.stopGame();
 	}
 }
 

@@ -8,7 +8,7 @@ class Main extends React.Component {
 		return (
 			<div className="row">
 				<div className="col-md-8">
-					<Deck size="small" />
+					<Deck size="medium" />
 				</div>
 				<div className="col-md-4">
 					<Highscores />

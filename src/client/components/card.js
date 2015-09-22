@@ -47,7 +47,7 @@ class Card extends React.Component {
 		}
 
 		let card = (
-			<ReactCSSTransitionGroup transitionName="flip" transitionAppear={true}>
+			<ReactCSSTransitionGroup transitionName="flip">
 				{front}
 				{back}
 			</ReactCSSTransitionGroup>

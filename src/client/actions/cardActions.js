@@ -66,6 +66,9 @@ class CardActions {
 		cards = indexBy(cards, 'id');
 
 		this.actions.updateCards(cards);
+		setTimeout(() => {
+			this.actions.sortCards();
+		}, 500);
 	}
 
 	openCard(card) {
@@ -110,12 +113,6 @@ class CardActions {
 
 		if(cards.length === matchedCards.length) {
 			this.actions.stopGame();
-			
-			setTimeout(() => {
-				let username = (0|Math.random()*9e6).toString(36);
-				let score = this.alt.stores.CardStore.getState().timer;
-				HighscoreActions.setHighscore({ username: username, score: score });
-			}, 0);
 		}
 	}
 

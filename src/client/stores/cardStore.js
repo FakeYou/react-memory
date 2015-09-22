@@ -9,6 +9,7 @@ class CardStore {
 	constructor() {
 		this.timer = 0;
 		this.started = false;
+		this.finished = false;
 		this.cards = [];
 	}
 
@@ -44,12 +45,14 @@ class CardStore {
 
 		this.updateCards(cards);
 		this.started = true;
+		this.finished = false;
 		this.timer = 0;
 	}
 
 	@bind(CardActions.stopGame);
 	stopGame() {
 		this.started = false;
+		this.finished = true;
 	}
 
 	@bind(CardActions.sortCards);
