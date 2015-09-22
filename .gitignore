@@ -31,4 +31,4 @@ build/Release
 node_modules
 
 # Database
-database
+db/

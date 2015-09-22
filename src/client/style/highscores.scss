@@ -37,7 +37,7 @@ $medals: (
 			@each $i, $medal in $medals {
 				$size: (18px - $i*2);
 
-				tr:nth-child(#{$i}) td:first-child::after {
+				tr:nth-child(#{$i}) td:not(.message):first-child::after {
 					content: '';
 					background-color: $medal;
 					border: 2px solid darken($medal, 20);
