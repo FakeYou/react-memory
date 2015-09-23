@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import socket from 'socket';
 import classNames from 'classNames';
 import CardActions from 'actions/cardActions';
 import HighscoreActions from 'actions/highscoreActions';
@@ -34,7 +35,7 @@ class Menu extends React.Component {
 			<button className="startButton btn btn-default btn-lg" onClick={this.handleStartGame}>Start new game</button>
 		);
 
-		if(this.props.finished && !this.state.submitted) {
+		if(this.props.finished && !this.state.submitted && socket.connected) {
 			highscoreForm = (
 				<form className="form-inline" onSubmit={this.handleSubmitScore}>
 					<input name="name" type="text" className="form-control" placeholder="Name" defaultValue={name} />
