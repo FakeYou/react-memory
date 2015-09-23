@@ -20,6 +20,7 @@ class Menu extends React.Component {
 
 	render() {
 		let startButton;
+		let congratulationsMessage;
 		let highscoreForm;
 		let classes = classNames([
 			'menu',
@@ -43,8 +44,15 @@ class Menu extends React.Component {
 			);
 		}
 
+		if(this.props.finished) {
+			congratulationsMessage = (
+				<h1>Congratulations!<br />You finished in {score}</h1>
+			);
+		}
+
 		return (
 			<div className={classes}>
+				{congratulationsMessage}
 				{highscoreForm}
 				{startButton}
 			</div>

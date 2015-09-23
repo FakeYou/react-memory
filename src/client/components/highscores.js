@@ -58,10 +58,10 @@ class Highscores extends React.Component {
 							<th width="40%">Score</th>
 						</tr>
 					</thead>
-					<ReactCSSTransitionGroup transitionName="entry" component="tbody">
+					<tbody>
 						{entries}
-					</ReactCSSTransitionGroup>
-				</table>
+					</tbody>
+				</table> 	
 			</div>
 		);
 	}
